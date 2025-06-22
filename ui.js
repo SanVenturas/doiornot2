@@ -95,21 +95,6 @@ export function displayError(errorMessage) {
     elements.result.className = 'result';
 }
 
-export function showCompressionLoading() {
-    elements.uploadArea.classList.add('hidden');
-    elements.previewContainer.classList.add('hidden');
-    elements.resultContainer.classList.remove('hidden');
-    elements.loading.classList.remove('hidden');
-    elements.result.classList.add('hidden');
-    elements.loading.querySelector('p').textContent = '准备压缩图片...';
-}
-
-export function updateLoadingText(text) {
-    if (!elements.loading.classList.contains('hidden')) {
-        elements.loading.querySelector('p').textContent = text;
-    }
-}
-
 export function resetToUpload() {
     elements.previewContainer.classList.add('hidden');
     elements.resultContainer.classList.add('hidden');
