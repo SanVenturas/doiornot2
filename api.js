@@ -1,7 +1,7 @@
 // frontend/api.js
 
 // 在本地测试时，我们指向本地后端。部署后会再次修改这里。
-const API_URL = 'https://doiornot.onrender.com/api/analyze';
+const API_URL = 'https://huggingface.co/spaces/SanVenturas/doiornot/api/analyze';
 
 export async function analyzeImage(imageDataUrl, aiType) {
     try {
