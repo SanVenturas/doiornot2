@@ -31,52 +31,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Handlers ---
-async function handleFileSelect() { // 注意：函数现在是 async 的
-    if (!elements.fileInput.files.length) return;
+    function handleFileSelect() {
+        if (!elements.fileInput.files.length) return;
 
-    const file = elements.fileInput.files[0];
-    if (!file.type.startsWith('image/')) {
-        alert('请选择一个图片文件');
-        return;
-    }
+        const file = elements.fileInput.files[0];
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file');
+            return;
+        }
 
-    console.log(`原始图片: ${file.name}, 大小: ${(file.size / 1024 / 1024).toFixed(2)} MB`);
-
-    // --- 压缩配置 ---
-    const options = {
-        maxSizeMB: 1,      // 核心：图片最大体积（MB），超过则压缩
-        maxWidthOrHeight: 1920, // 核心：图片最大宽度或高度
-        useWebWorker: true,   // 使用Web Worker，避免压缩时UI卡顿
-        onProgress: (p) => {  // 提供压缩进度的回调
-            console.log(`压缩进度: ${p}%`);
-            // 在这里可以更新UI，显示压缩进度
-            ui.updateLoadingText(`正在压缩图片... ${p.toFixed(0)}%`);
-        },
-    };
-
-    try {
-        // 显示一个临时的加载状态，告知用户正在压缩
-        ui.showCompressionLoading();
-
-        // 调用压缩库
-        const compressedFile = await imageCompression(file, options);
-        
-        console.log(`压缩后图片大小: ${(compressedFile.size / 1024 / 1024).toFixed(2)} MB`);
-
-        // 使用压缩后的文件进行后续操作
         const reader = new FileReader();
         reader.onload = (e) => {
             selectedImageDataUrl = e.target.result;
             ui.showPreview(selectedImageDataUrl);
         };
-        reader.readAsDataURL(compressedFile);
-
-    } catch (error) {
-        console.error('图片压缩失败:', error);
-        alert(`图片压缩失败: ${error.message}`);
-        ui.resetToUpload(); // 如果压缩失败，重置回上传界面
+        reader.readAsDataURL(file);
     }
-}
 
     async function handleStartAnalysis() {
         if (!selectedImageDataUrl) return;
