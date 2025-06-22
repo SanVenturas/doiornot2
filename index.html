@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统维护中 - 上不上AI评分系统</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        /* CSS被内联在此，确保文件自包含 */
+        :root {
+            --primary-color: #ff00ff;   /* Neon Pink/Magenta */
+            --secondary-color: #00ffff; /* Neon Cyan */
+            --accent-color: #ffff00;    /* Neon Yellow */
+            --dark-color: #0d0221;      /* Deep Purple/Blue */
+            --light-color: #f0f0f0;
+            --border-color: var(--secondary-color);
+            --font-heading: 'Press Start 2P', cursive;
+            --font-body: 'VT323', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark-color);
+            color: var(--light-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 1rem;
+            background-image: 
+                linear-gradient(rgba(13, 2, 33, 0.95), rgba(13, 2, 33, 0.95)),
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            animation: moveGrid 10s linear infinite;
+            background-attachment: fixed;
+            overflow: hidden; /* 防止出现滚动条 */
+        }
+
+        .scanline-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,0,0,0) 0, rgba(0,0,0,0) 2px, rgba(255,255,255,0.05) 3px, rgba(255,255,255,0.05) 4px);
+            pointer-events: none;
+            z-index: 2;
+            animation: scanlines 10s linear infinite;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            padding: clamp(2rem, 8vw, 4rem);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 25px var(--primary-color), inset 0 0 15px var(--primary-color);
+            background: rgba(26, 1, 51, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1;
+            animation: textFlicker 3s linear infinite;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px var(--secondary-color), 0 0 10px var(--secondary-color), -2px 2px 0px var(--primary-color);
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            font-weight: normal;
+        }
+
+        p {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            line-height: 1.7;
+            color: var(--light-color);
+            margin-bottom: 2rem;
+        }
+
+        .message {
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--accent-color);
+            animation: blink 1.5s step-end infinite;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--secondary-color);
+            padding: 3px;
+        }
+
+        .progress-bar-inner {
+            width: 100%;
+            height: 100%;
+            background-color: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color);
+            animation: progressBarScan 2s linear infinite;
+        }
+
+        /* --- Animations --- */
+        @keyframes moveGrid {
+            0% { background-position: 0 0, 0 0, 0 0; }
+            100% { background-position: 0 0, -40px -40px, -40px -40px; }
+        }
+
+        @keyframes scanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        @keyframes textFlicker {
+            0% { opacity: 0.9; }
+            5% { opacity: 0.5; }
+            10% { opacity: 0.9; }
+            15% { opacity: 0.7; }
+            20% { opacity: 1; }
+            100% { opacity: 1; }
+        }
+        
+        @keyframes progressBarScan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanline-overlay"></div>
+    <div class="container">
+        <h1>SYSTEM OFFLINE</h1>
+        <p>系统正在进行升级维护，暂时无法提供服务。</p>
+        <p class="message">// 我们会尽快回来 //</p>
+        <div class="progress-bar">
+            <div class="progress-bar-inner"></div>
+        </div>
+    </div>
+</body>
+</html>
