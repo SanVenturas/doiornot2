@@ -74,7 +74,7 @@ export const systemPrompts = {
               "verdict": "...",
               "rating": ...,
               "explanation": "..."
-            }
+            }`
 
                 Rating scale: 
                 - 1-2 = 完全不想碰，恶心透顶
