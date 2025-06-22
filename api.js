@@ -1,7 +1,7 @@
 // frontend/api.js
 
 // 在本地测试时，我们指向本地后端。部署后会再次修改这里。
-const API_URL = 'http://152.69.195.48:3001/api/analyze';
+const API_URL = 'https://SanVenturas-doiornot.hf.space/api/analyze';
 
 export async function analyzeImage(imageDataUrl, aiType) {
     try {
