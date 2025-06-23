@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +7,509 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-color: #ff00ff; /* Neon Pink/Magenta */
+            --secondary-color: #00ffff; /* Neon Cyan */
+            --accent-color: #ffff00; /* Neon Yellow */
+            --dark-color: #0d0221; /* Deep Purple/Blue */
+            --light-color: #f0f0f0;
+            --smash-color: #39ff14; /* Neon Green */
+            --pass-color: #ff073a; /* Neon Red */
+            --neutral-color: #feca57;
+            --bg-color: #0d0221;
+            --text-color: #f0f0f0;
+            --container-bg: rgba(26, 1, 51, 0.85); /* Darker purple, semi-transparent */
+            --border-color: var(--secondary-color);
+            --font-heading: 'Press Start 2P', cursive;
+            --font-body: 'VT323', monospace;
+            --subtitle-color: #b0bec5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--dark-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 20px;
+            background-image: 
+                linear-gradient(rgba(13, 2, 33, 0.95), rgba(13, 2, 33, 0.95)),
+                linear-gradient(var(--border-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            animation: moveGrid 10s linear infinite;
+            background-attachment: fixed;
+        }
+
+        @keyframes moveGrid {
+            0% { background-position: 0 0, 0 0, 0 0; }
+            100% { background-position: 0 0, -40px -40px, -40px -40px; }
+        }
+
+        .scanline-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0) 0,
+                rgba(0, 0, 0, 0) 2px,
+                rgba(255, 255, 255, 0.05) 3px,
+                rgba(255, 255, 255, 0.05) 4px
+            );
+            pointer-events: none;
+            z-index: 9999;
+            animation: scanlines 10s linear infinite;
+        }
+
+        @keyframes scanlines {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100px; }
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: var(--container-bg);
+            border-radius: 0;
+            box-shadow: 0 0 15px var(--primary-color), inset 0 0 10px var(--primary-color);
+            padding: 30px 40px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 2px solid var(--primary-color);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-family: var(--font-heading);
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+            font-weight: normal;
+            margin-bottom: 15px;
+            text-shadow: 
+                0 0 5px var(--secondary-color),
+                0 0 10px var(--secondary-color),
+                -2px 2px 0px var(--primary-color);
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-family: var(--font-body);
+            color: var(--light-color);
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+
+        .disclaimer {
+            background-color: rgba(254, 202, 87, 0.1);
+            border-left: 5px solid var(--neutral-color);
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: 0;
+            position: relative;
+            font-size: 1.1rem;
+        }
+
+        .disclaimer p {
+            font-size: 1.2rem;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .disclaimer strong {
+            color: #ff5252;
+            font-weight: normal;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: var(--light-color);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .announcement {
+            background-color: rgba(0, 255, 255, 0.1);
+            border-left: 5px solid var(--secondary-color);
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 0;
+            position: relative;
+            font-size: 1.1rem;
+            border: 1px solid var(--secondary-color);
+        }
+
+        .announcement h3 {
+            font-family: var(--font-heading);
+            color: var(--secondary-color);
+            font-size: 1rem;
+            margin-bottom: 8px;
+            text-shadow: 0 0 5px var(--secondary-color);
+        }
+
+        .announcement p {
+            font-size: 1.2rem;
+            line-height: 1.4;
+            margin: 0;
+            color: var(--light-color);
+        }
+
+        .announcement .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            background: none;
+            border: none;
+            color: var(--secondary-color);
+            font-size: 1.6rem;
+            cursor: pointer;
+            transition: color 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .announcement .close-btn:hover {
+            color: var(--primary-color);
+        }
+
+        .ai-type-selector {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .ai-type-selector p {
+            margin-bottom: 15px;
+            font-weight: normal;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .ai-type-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .ai-type-option {
+            min-width: 140px;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background-color: transparent;
+        }
+
+        .ai-type-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 0, 255, 0.1);
+        }
+
+        .ai-type-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .ai-type-option input:checked + .ai-type-name {
+            color: var(--primary-color);
+        }
+
+        .ai-type-option input:checked + .ai-type-name::before {
+            content: ">> ";
+            font-weight: normal;
+            color: var(--accent-color);
+        }
+
+        .ai-type-name {
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+
+        .ai-type-desc {
+            font-size: 1.2rem;
+            color: var(--subtitle-color);
+        }
+
+        .upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 0;
+            padding: 50px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            margin-bottom: 30px;
+            background-color: rgba(0, 0, 0, 0.2);
+            font-size: 1.5rem;
+        }
+
+        .upload-area:hover, .upload-area.drag-over {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 0, 255, 0.1);
+            box-shadow: inset 0 0 10px var(--primary-color);
+        }
+
+        .upload-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .upload-icon {
+            color: var(--border-color);
+            width: 64px;
+            height: 64px;
+            transition: all 0.3s;
+        }
+
+        .upload-area:hover .upload-icon {
+            color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .upload-btn {
+            color: var(--primary-color);
+            font-weight: normal;
+            text-decoration: none;
+            cursor: pointer;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .preview-container, .result-container {
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        .preview-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .image-preview-container {
+            max-height: 350px;
+            overflow: hidden;
+            border-radius: 0;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        #image-preview, #preview-image {
+            max-width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+        }
+
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin: 40px 0;
+            font-family: var(--font-body);
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+        }
+
+        .loading p::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        .result {
+            text-align: center;
+            padding: 30px;
+            border-radius: 0;
+            margin-top: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .verdict-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        #verdict {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: normal;
+            letter-spacing: 1px;
+        }
+
+        #verdict-icon {
+            font-size: 2rem;
+            line-height: 1;
+        }
+
+        #explanation {
+            font-size: 1.6rem;
+            line-height: 1.5;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            white-space: pre-wrap;
+        }
+
+        .result-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn {
+            font-family: var(--font-body);
+            background-color: transparent;
+            color: var(--secondary-color);
+            border: 2px solid var(--secondary-color);
+            padding: 12px 24px;
+            border-radius: 0;
+            font-size: 1.5rem;
+            font-weight: normal;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+            box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.5);
+            line-height: 1.2;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-color);
+            color: var(--dark-color);
+            box-shadow: 0 0 15px var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+            box-shadow: none;
+        }
+
+        .btn-secondary {
+            border-color: #7f8c8d;
+            color: #7f8c8d;
+            box-shadow: inset 0 0 5px rgba(127, 140, 141, 0.5);
+        }
+
+        .btn-secondary:hover {
+            background-color: #7f8c8d;
+            color: var(--dark-color);
+            box-shadow: 0 0 15px #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .smash {
+            background-color: rgba(57, 255, 20, 0.1);
+            border-color: var(--smash-color);
+            box-shadow: 0 0 10px var(--smash-color);
+        }
+
+        .pass {
+            background-color: rgba(255, 7, 58, 0.1);
+            border-color: var(--pass-color);
+            box-shadow: 0 0 10px var(--pass-color);
+        }
+
+        .theme-toggle {
+            display: none;
+        }
+
+        .view-saved-btn {
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            background-color: transparent;
+            color: var(--accent-color);
+            border-color: var(--accent-color);
+            display: block;
+            margin: 30px auto 0;
+        }
+
+        .view-saved-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--dark-color);
+            box-shadow: 0 0 15px var(--accent-color);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .upload-area {
+                padding: 30px 20px;
+                font-size: 1.2rem;
+            }
+
+            #verdict {
+                font-size: 1.2rem;
+            }
+            .result-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+            }
+            
+            .ai-type-options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="scanline-overlay"></div>
@@ -20,6 +523,12 @@
         <div class="disclaimer" id="disclaimer">
             <button class="close-btn" id="close-disclaimer">×</button>
             <p>⚠️ <strong>免责声明：</strong> 就图一乐，AI就看外形瞎评，甭当真！别拿自己照片试水，怕被喷就闪，审美这玩意儿因人而异！</p>
+        </div>
+
+        <div class="announcement" id="announcement">
+            <button class="close-btn" id="close-announcement">×</button>
+            <h3>公告</h3>
+            <p>显示错误的话大概是gemini觉得你发的图片太色情了不好评价，真人漏点图片基本上测不出来。禁止发铜，测点二次元色图就算了。</p>
         </div>
 
         <div class="ai-type-selector">
@@ -83,12 +592,222 @@
                 <p id="explanation"></p>
                 <div class="result-actions">
                     <button id="try-again" class="btn">🔁 再试一次</button>
-                    <!-- Save and Share buttons will be injected here -->
                 </div>
             </div>
         </div>
         <button class="btn view-saved-btn" id="view-saved">📁 查看保存的结果</button>
     </div>
-    <script type="module" src="main.js"></script>
+
+    <script>
+        // 基础变量
+        let currentImage = null;
+        let currentImageFile = null;
+
+        // DOM 元素
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const resultContainer = document.getElementById('result-container');
+        const imagePreview = document.getElementById('image-preview');
+        const loading = document.getElementById('loading');
+        const result = document.getElementById('result');
+        const verdict = document.getElementById('verdict');
+        const verdictIcon = document.getElementById('verdict-icon');
+        const explanation = document.getElementById('explanation');
+        const startAnalysisBtn = document.getElementById('start-analysis-btn');
+        const changeImageBtn = document.getElementById('change-image-btn');
+        const tryAgainBtn = document.getElementById('try-again');
+        const disclaimer = document.getElementById('disclaimer');
+        const closeDisclaimerBtn = document.getElementById('close-disclaimer');
+        const announcement = document.getElementById('announcement');
+        const closeAnnouncementBtn = document.getElementById('close-announcement');
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeEventListeners();
+            loadDisclaimerState();
+            loadAnnouncementState();
+        });
+
+        function initializeEventListeners() {
+            // 上传区域事件
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('drop', handleDrop);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+
+            // 文件输入事件
+            fileInput.addEventListener('change', handleFileSelect);
+
+            // 按钮事件
+            startAnalysisBtn.addEventListener('click', startAnalysis);
+            changeImageBtn.addEventListener('click', changeImage);
+            tryAgainBtn.addEventListener('click', tryAgainAnalysis);
+
+            // 免责声明和公告关闭事件
+            closeDisclaimerBtn.addEventListener('click', closeDisclaimer);
+            closeAnnouncementBtn.addEventListener('click', closeAnnouncement);
+        }
+
+        // 拖拽处理
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        }
+
+        // 文件选择处理
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        // 文件处理
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                alert('请选择图片文件！');
+                return;
+            }
+
+            currentImageFile = file;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentImage = e.target.result;
+                previewImage.src = currentImage;
+                uploadArea.classList.add('hidden');
+                previewContainer.classList.remove('hidden');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // 开始分析
+        function startAnalysis() {
+            if (!currentImage) return;
+
+            // 隐藏预览，显示结果容器
+            previewContainer.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            
+            // 设置结果区域的图片
+            imagePreview.src = currentImage;
+            
+            // 显示加载状态
+            loading.classList.remove('hidden');
+            result.classList.add('hidden');
+
+            // 获取选中的AI模式
+            const selectedMode = document.querySelector('input[name="ai-type"]:checked').value;
+            
+            // 模拟AI分析（3-5秒随机延迟）
+            const delay = Math.random() * 2000 + 3000;
+            setTimeout(() => {
+                generateMockResult(selectedMode);
+                loading.classList.add('hidden');
+                result.classList.remove('hidden');
+            }, delay);
+        }
+
+        // 生成模拟结果
+        function generateMockResult(mode) {
+            const scores = [
+                { verdict: "可上 8.5/10", icon: "🔥", type: "smash" },
+                { verdict: "可上 7.2/10", icon: "😍", type: "smash" },
+                { verdict: "可上 6.8/10", icon: "👌", type: "smash" },
+                { verdict: "不上 4.2/10", icon: "😬", type: "pass" },
+                { verdict: "不上 3.1/10", icon: "🤔", type: "pass" },
+                { verdict: "不上 5.5/10", icon: "😐", type: "pass" }
+            ];
+
+            const briefExplanations = [
+                "颜值在线，身材不错！",
+                "气质挺好的，挺耐看。",
+                "五官端正，符合审美。",
+                "感觉一般，没啥特色。",
+                "不太符合个人喜好。",
+                "看着普普通通吧。"
+            ];
+
+            const detailedExplanations = [
+                "整体颜值很不错，五官搭配和谐，身材比例也挺好的。气质方面给人感觉比较舒服，属于那种越看越顺眼的类型。综合来说还是挺有吸引力的。",
+                "从外观来看，这个人的五官还算端正，身材也保持得不错。整体给人的感觉比较清爽，没有什么明显的缺点。不过也没有特别突出的亮点，属于中等偏上的水平。",
+                "说实话，个人觉得不太符合我的审美。五官搭配感觉有点不太协调，身材比例也一般般。当然审美这东西因人而异，可能别人会觉得挺好看的。",
+                "整体感觉比较平庸，没有什么特别吸引人的地方。五官谈不上精致，身材也没什么特色。不过人家可能有其他方面的魅力，光看外表确实一般。"
+            ];
+
+            const randomScore = scores[Math.floor(Math.random() * scores.length)];
+            let explanationText;
+
+            if (mode === 'brief') {
+                explanationText = briefExplanations[Math.floor(Math.random() * briefExplanations.length)];
+            } else if (mode === 'descriptive') {
+                explanationText = detailedExplanations[Math.floor(Math.random() * detailedExplanations.length)];
+            } else {
+                explanationText = "小说模式暂未开放";
+            }
+
+            verdict.textContent = randomScore.verdict;
+            verdictIcon.textContent = randomScore.icon;
+            explanation.textContent = explanationText;
+
+            // 设置结果样式
+            result.className = `result ${randomScore.type}`;
+        }
+
+        // 换图
+        function changeImage() {
+            previewContainer.classList.add('hidden');
+            uploadArea.classList.remove('hidden');
+            currentImage = null;
+            currentImageFile = null;
+            fileInput.value = '';
+        }
+
+        // 重新分析
+        function tryAgainAnalysis() {
+            startAnalysis();
+        }
+
+        // 关闭免责声明
+        function closeDisclaimer() {
+            disclaimer.style.display = 'none';
+            localStorage.setItem('disclaimerClosed', 'true');
+        }
+
+        // 关闭公告
+        function closeAnnouncement() {
+            announcement.style.display = 'none';
+            localStorage.setItem('announcementClosed', 'true');
+        }
+
+        // 加载免责声明状态
+        function loadDisclaimerState() {
+            if (localStorage.getItem('disclaimerClosed') === 'true') {
+                disclaimer.style.display = 'none';
+            }
+        }
+
+        // 加载公告状态
+        function loadAnnouncementState() {
+            if (localStorage.getItem('announcementClosed') === 'true') {
+                announcement.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
