@@ -75,6 +75,12 @@
             100% { background-position: 0 100px; }
         }
 
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         .container {
             max-width: 700px;
             margin: 0 auto;
@@ -116,7 +122,7 @@
             background-color: rgba(254, 202, 87, 0.1);
             border-left: 5px solid var(--neutral-color);
             padding: 10px 15px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border-radius: 0;
             position: relative;
             font-size: 1.1rem;
@@ -125,7 +131,6 @@
         .disclaimer p {
             font-size: 1.2rem;
             line-height: 1.4;
-            margin: 0;
         }
 
         .disclaimer strong {
@@ -153,7 +158,7 @@
         .announcement {
             background-color: rgba(0, 255, 255, 0.1);
             border-left: 5px solid var(--secondary-color);
-            padding: 12px 15px;
+            padding: 10px 15px;
             margin-bottom: 20px;
             border-radius: 0;
             position: relative;
@@ -164,8 +169,8 @@
         .announcement h3 {
             font-family: var(--font-heading);
             color: var(--secondary-color);
-            font-size: 1rem;
-            margin-bottom: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
             text-shadow: 0 0 5px var(--secondary-color);
         }
 
@@ -177,86 +182,7 @@
         }
 
         .announcement .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 8px;
-            background: none;
-            border: none;
             color: var(--secondary-color);
-            font-size: 1.6rem;
-            cursor: pointer;
-            transition: color 0.2s;
-            font-family: var(--font-body);
-        }
-
-        .announcement .close-btn:hover {
-            color: var(--primary-color);
-        }
-
-        .ai-type-selector {
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 0;
-            border: 2px solid var(--border-color);
-        }
-
-        .ai-type-selector p {
-            margin-bottom: 15px;
-            font-weight: normal;
-            font-family: var(--font-heading);
-            font-size: 1rem;
-            color: var(--primary-color);
-            text-shadow: 0 0 5px var(--primary-color);
-        }
-
-        .ai-type-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-        }
-
-        .ai-type-option {
-            min-width: 140px;
-            display: flex;
-            flex-direction: column;
-            padding: 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 0;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            background-color: transparent;
-        }
-
-        .ai-type-option:hover {
-            border-color: var(--primary-color);
-            background-color: rgba(255, 0, 255, 0.1);
-        }
-
-        .ai-type-option input {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .ai-type-option input:checked + .ai-type-name {
-            color: var(--primary-color);
-        }
-
-        .ai-type-option input:checked + .ai-type-name::before {
-            content: ">> ";
-            font-weight: normal;
-            color: var(--accent-color);
-        }
-
-        .ai-type-name {
-            font-size: 1.5rem;
-            font-weight: normal;
-            margin-bottom: 5px;
-        }
-
-        .ai-type-desc {
-            font-size: 1.2rem;
-            color: var(--subtitle-color);
         }
 
         .upload-area {
@@ -275,6 +201,7 @@
             border-color: var(--primary-color);
             background-color: rgba(255, 0, 255, 0.1);
             box-shadow: inset 0 0 10px var(--primary-color);
+            transform: none;
         }
 
         .upload-inner {
@@ -304,7 +231,7 @@
             border-bottom: 1px solid var(--primary-color);
         }
 
-        .preview-container, .result-container {
+        .preview-container {
             margin-top: 30px;
             width: 100%;
         }
@@ -314,6 +241,11 @@
             justify-content: center;
             gap: 15px;
             margin-top: 25px;
+        }
+
+        .result-container {
+            margin-top: 30px;
+            width: 100%;
         }
 
         .image-preview-container {
@@ -329,7 +261,13 @@
             cursor: pointer;
         }
 
-        #image-preview, #preview-image {
+        #image-preview {
+            max-width: 100%;
+            max-height: 350px;
+            object-fit: contain;
+        }
+
+        #preview-image {
             max-width: 100%;
             max-height: 350px;
             object-fit: contain;
@@ -353,6 +291,16 @@
 
         @keyframes blink {
             50% { opacity: 0; }
+        }
+
+        .spinner {
+            display: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .result {
@@ -443,6 +391,7 @@
             display: none;
         }
 
+        /* Smash and Pass specific styles */
         .smash {
             background-color: rgba(57, 255, 20, 0.1);
             border-color: var(--smash-color);
@@ -455,8 +404,293 @@
             box-shadow: 0 0 10px var(--pass-color);
         }
 
+        .ai-type-selector {
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .ai-type-selector p {
+            margin-bottom: 15px;
+            font-weight: normal;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .ai-type-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .ai-type-option {
+            min-width: 140px;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border: 2px solid var(--border-color);
+            border-radius: 0;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            background-color: transparent;
+        }
+
+        .ai-type-option:hover {
+            border-color: var(--primary-color);
+            background-color: rgba(255, 0, 255, 0.1);
+            transform: none;
+            box-shadow: none;
+        }
+
+        .ai-type-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .ai-type-option input:checked + .ai-type-name {
+            color: var(--primary-color);
+        }
+
+        .ai-type-option input:checked ~ * {
+            font-weight: normal;
+        }
+
+        .ai-type-option input:checked + .ai-type-name::before {
+            content: ">> ";
+            font-weight: normal;
+            color: var(--accent-color);
+        }
+
+        .ai-type-name {
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 5px;
+        }
+
+        .ai-type-desc {
+            font-size: 1.2rem;
+            color: var(--subtitle-color);
+        }
+
+        /* Dark mode styles */
+        .dark-mode {
+            /* Styles removed as dark mode is now the default */
+        }
+
+        .image-preview-container-result {
+            position: relative;
+            max-height: 350px;
+            overflow: hidden;
+            border-radius: 0;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+        }
+
+        .image-preview-container-result .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: normal;
+            font-size: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none; /* Allows clicks to pass through to the container */
+        }
+
+        .image-preview-container-result:hover .image-overlay {
+            opacity: 1;
+        }
+
+        .image-preview-container-result.drag-over {
+            border: 2px dashed var(--primary-color);
+        }
+
+        .image-preview-container-result.drag-over .image-overlay {
+            opacity: 1;
+            background-color: rgba(255, 0, 255, 0.5);
+        }
+
+        /* Theme toggle */
         .theme-toggle {
             display: none;
+        }
+
+        /* Add these new styles at the end */
+        .saved-results {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 0;
+            border: 2px solid var(--border-color);
+        }
+
+        .saved-results h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: normal;
+            color: var(--primary-color);
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px var(--primary-color);
+        }
+
+        .saved-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .saved-result-card {
+            background: var(--container-bg);
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .saved-result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 10px var(--accent-color);
+            border-color: var(--accent-color);
+        }
+
+        .saved-result-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .saved-result-info {
+            padding: 15px;
+        }
+
+        .saved-result-info .verdict {
+            font-weight: normal;
+            margin-bottom: 5px;
+            color: var(--light-color);
+            font-family: var(--font-heading);
+            font-size: 1rem;
+        }
+
+        .saved-result-info .explanation {
+            max-height: 80px;
+            overflow-y: auto;
+            padding-right: 5px;
+            margin: 8px 0;
+            line-height: 1.4;
+            font-size: 1.2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .saved-result-info .date {
+            font-size: 1rem;
+            color: var(--subtitle-color);
+            margin: 8px 0;
+            font-weight: normal;
+        }
+
+        .saved-result-info .ai-type {
+            font-style: normal;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .saved-result-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .delete-btn, .view-btn {
+            padding: 8px 10px;
+            border-radius: 0;
+            font-size: 1.2rem;
+            font-weight: normal;
+            width: 100%;
+            border: 1px solid;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            text-transform: uppercase;
+        }
+
+        .delete-btn {
+            background: transparent;
+            border-color: var(--pass-color);
+            color: var(--pass-color);
+        }
+
+        .view-btn {
+          background: transparent;
+          border-color: var(--accent-color);
+          color: var(--accent-color);
+        }
+
+        .delete-btn:hover {
+            background: var(--pass-color);
+            color: var(--dark-color);
+            transform: scale(1.05);
+        }
+
+        .view-btn:hover{
+            background: var(--accent-color);
+            color: var(--dark-color);
+            transform: scale(1.05);
+        }
+
+        .save-btn {
+            border-color: var(--smash-color);
+            color: var(--smash-color);
+        }
+
+        .save-btn:disabled {
+            border-color: #555;
+            color: #555;
+            background: transparent;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .save-btn:disabled:hover {
+            background-color: transparent;
+        }
+
+        .save-btn:hover {
+            background-color: var(--smash-color);
+            color: var(--dark-color);
+            box-shadow: 0 0 15px var(--smash-color);
+        }
+
+        .share-btn {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .share-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--dark-color);
+            box-shadow: 0 0 15px var(--primary-color);
         }
 
         .view-saved-btn {
@@ -476,6 +710,118 @@
             box-shadow: 0 0 15px var(--accent-color);
         }
 
+        #popup-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(13, 2, 33, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 1rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s 0.3s;
+        }
+
+        #popup-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup-card {
+            background-color: var(--container-bg);
+            color: var(--text-color);
+            border-radius: 0;
+            padding: 24px 30px;
+            max-width: 550px;
+            width: 100%;
+            box-shadow: 0 0 20px var(--secondary-color), inset 0 0 15px var(--secondary-color);
+            position: relative;
+            text-align: center;
+            transform: scale(0.95);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            border: 2px solid var(--secondary-color);
+        }
+
+        #popup-overlay.visible .popup-card {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .popup-card img {
+            width: 100%;
+            max-height: 40vh;
+            object-fit: contain;
+            border-radius: 0;
+            margin-bottom: 20px;
+            background-color: #000;
+            border: 1px solid var(--border-color);
+        }
+
+        .popup-card h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+
+        .popup-card p {
+            margin: 10px 0;
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: var(--text-color);
+            white-space: pre-wrap;
+        }
+
+        .popup-card .close-popup {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 24px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border-radius: 0;
+            border: 1px solid var(--subtitle-color);
+            color: var(--subtitle-color);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-body);
+        }
+
+        .popup-card .close-popup:hover {
+            background: var(--primary-color);
+            color: var(--dark-color);
+            border-color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+
+        .saved-result-card {
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .saved-result-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.7);
+            border-color: var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -491,6 +837,10 @@
             .upload-area {
                 padding: 30px 20px;
                 font-size: 1.2rem;
+            }
+            
+            .theme-toggle {
+                display: none;
             }
 
             #verdict {
@@ -527,8 +877,8 @@
 
         <div class="announcement" id="announcement">
             <button class="close-btn" id="close-announcement">×</button>
-            <h3>公告</h3>
-            <p>显示错误的话大概是gemini觉得你发的图片太色情了不好评价，真人漏点图片基本上测不出来。禁止发铜，测点二次元色图就算了。</p>
+            <h3>📢 系统公告</h3>
+            <p>显示错误的话大概是gemini觉得你发的图片太色情了不好评价，真人漏点图片基本上测不出来。禁止发铜，测点二次元色图就算了，除了换模型也没有什么好解决办法。</p>
         </div>
 
         <div class="ai-type-selector">
@@ -592,222 +942,12 @@
                 <p id="explanation"></p>
                 <div class="result-actions">
                     <button id="try-again" class="btn">🔁 再试一次</button>
+                    <!-- Save and Share buttons will be injected here -->
                 </div>
             </div>
         </div>
         <button class="btn view-saved-btn" id="view-saved">📁 查看保存的结果</button>
     </div>
-
-    <script>
-        // 基础变量
-        let currentImage = null;
-        let currentImageFile = null;
-
-        // DOM 元素
-        const uploadArea = document.getElementById('upload-area');
-        const fileInput = document.getElementById('file-input');
-        const previewContainer = document.getElementById('preview-container');
-        const previewImage = document.getElementById('preview-image');
-        const resultContainer = document.getElementById('result-container');
-        const imagePreview = document.getElementById('image-preview');
-        const loading = document.getElementById('loading');
-        const result = document.getElementById('result');
-        const verdict = document.getElementById('verdict');
-        const verdictIcon = document.getElementById('verdict-icon');
-        const explanation = document.getElementById('explanation');
-        const startAnalysisBtn = document.getElementById('start-analysis-btn');
-        const changeImageBtn = document.getElementById('change-image-btn');
-        const tryAgainBtn = document.getElementById('try-again');
-        const disclaimer = document.getElementById('disclaimer');
-        const closeDisclaimerBtn = document.getElementById('close-disclaimer');
-        const announcement = document.getElementById('announcement');
-        const closeAnnouncementBtn = document.getElementById('close-announcement');
-
-        // 初始化
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeEventListeners();
-            loadDisclaimerState();
-            loadAnnouncementState();
-        });
-
-        function initializeEventListeners() {
-            // 上传区域事件
-            uploadArea.addEventListener('click', () => fileInput.click());
-            uploadArea.addEventListener('dragover', handleDragOver);
-            uploadArea.addEventListener('drop', handleDrop);
-            uploadArea.addEventListener('dragleave', handleDragLeave);
-
-            // 文件输入事件
-            fileInput.addEventListener('change', handleFileSelect);
-
-            // 按钮事件
-            startAnalysisBtn.addEventListener('click', startAnalysis);
-            changeImageBtn.addEventListener('click', changeImage);
-            tryAgainBtn.addEventListener('click', tryAgainAnalysis);
-
-            // 免责声明和公告关闭事件
-            closeDisclaimerBtn.addEventListener('click', closeDisclaimer);
-            closeAnnouncementBtn.addEventListener('click', closeAnnouncement);
-        }
-
-        // 拖拽处理
-        function handleDragOver(e) {
-            e.preventDefault();
-            uploadArea.classList.add('drag-over');
-        }
-
-        function handleDragLeave(e) {
-            e.preventDefault();
-            uploadArea.classList.remove('drag-over');
-        }
-
-        function handleDrop(e) {
-            e.preventDefault();
-            uploadArea.classList.remove('drag-over');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFile(files[0]);
-            }
-        }
-
-        // 文件选择处理
-        function handleFileSelect(e) {
-            const file = e.target.files[0];
-            if (file) {
-                handleFile(file);
-            }
-        }
-
-        // 文件处理
-        function handleFile(file) {
-            if (!file.type.startsWith('image/')) {
-                alert('请选择图片文件！');
-                return;
-            }
-
-            currentImageFile = file;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                currentImage = e.target.result;
-                previewImage.src = currentImage;
-                uploadArea.classList.add('hidden');
-                previewContainer.classList.remove('hidden');
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // 开始分析
-        function startAnalysis() {
-            if (!currentImage) return;
-
-            // 隐藏预览，显示结果容器
-            previewContainer.classList.add('hidden');
-            resultContainer.classList.remove('hidden');
-            
-            // 设置结果区域的图片
-            imagePreview.src = currentImage;
-            
-            // 显示加载状态
-            loading.classList.remove('hidden');
-            result.classList.add('hidden');
-
-            // 获取选中的AI模式
-            const selectedMode = document.querySelector('input[name="ai-type"]:checked').value;
-            
-            // 模拟AI分析（3-5秒随机延迟）
-            const delay = Math.random() * 2000 + 3000;
-            setTimeout(() => {
-                generateMockResult(selectedMode);
-                loading.classList.add('hidden');
-                result.classList.remove('hidden');
-            }, delay);
-        }
-
-        // 生成模拟结果
-        function generateMockResult(mode) {
-            const scores = [
-                { verdict: "可上 8.5/10", icon: "🔥", type: "smash" },
-                { verdict: "可上 7.2/10", icon: "😍", type: "smash" },
-                { verdict: "可上 6.8/10", icon: "👌", type: "smash" },
-                { verdict: "不上 4.2/10", icon: "😬", type: "pass" },
-                { verdict: "不上 3.1/10", icon: "🤔", type: "pass" },
-                { verdict: "不上 5.5/10", icon: "😐", type: "pass" }
-            ];
-
-            const briefExplanations = [
-                "颜值在线，身材不错！",
-                "气质挺好的，挺耐看。",
-                "五官端正，符合审美。",
-                "感觉一般，没啥特色。",
-                "不太符合个人喜好。",
-                "看着普普通通吧。"
-            ];
-
-            const detailedExplanations = [
-                "整体颜值很不错，五官搭配和谐，身材比例也挺好的。气质方面给人感觉比较舒服，属于那种越看越顺眼的类型。综合来说还是挺有吸引力的。",
-                "从外观来看，这个人的五官还算端正，身材也保持得不错。整体给人的感觉比较清爽，没有什么明显的缺点。不过也没有特别突出的亮点，属于中等偏上的水平。",
-                "说实话，个人觉得不太符合我的审美。五官搭配感觉有点不太协调，身材比例也一般般。当然审美这东西因人而异，可能别人会觉得挺好看的。",
-                "整体感觉比较平庸，没有什么特别吸引人的地方。五官谈不上精致，身材也没什么特色。不过人家可能有其他方面的魅力，光看外表确实一般。"
-            ];
-
-            const randomScore = scores[Math.floor(Math.random() * scores.length)];
-            let explanationText;
-
-            if (mode === 'brief') {
-                explanationText = briefExplanations[Math.floor(Math.random() * briefExplanations.length)];
-            } else if (mode === 'descriptive') {
-                explanationText = detailedExplanations[Math.floor(Math.random() * detailedExplanations.length)];
-            } else {
-                explanationText = "小说模式暂未开放";
-            }
-
-            verdict.textContent = randomScore.verdict;
-            verdictIcon.textContent = randomScore.icon;
-            explanation.textContent = explanationText;
-
-            // 设置结果样式
-            result.className = `result ${randomScore.type}`;
-        }
-
-        // 换图
-        function changeImage() {
-            previewContainer.classList.add('hidden');
-            uploadArea.classList.remove('hidden');
-            currentImage = null;
-            currentImageFile = null;
-            fileInput.value = '';
-        }
-
-        // 重新分析
-        function tryAgainAnalysis() {
-            startAnalysis();
-        }
-
-        // 关闭免责声明
-        function closeDisclaimer() {
-            disclaimer.style.display = 'none';
-            localStorage.setItem('disclaimerClosed', 'true');
-        }
-
-        // 关闭公告
-        function closeAnnouncement() {
-            announcement.style.display = 'none';
-            localStorage.setItem('announcementClosed', 'true');
-        }
-
-        // 加载免责声明状态
-        function loadDisclaimerState() {
-            if (localStorage.getItem('disclaimerClosed') === 'true') {
-                disclaimer.style.display = 'none';
-            }
-        }
-
-        // 加载公告状态
-        function loadAnnouncementState() {
-            if (localStorage.getItem('announcementClosed') === 'true') {
-                announcement.style.display = 'none';
-            }
-        }
-    </script>
+    <script type="module" src="main.js"></script>
 </body>
 </html>
