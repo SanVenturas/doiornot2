@@ -460,23 +460,6 @@
             overflow: hidden;
         }
 
-        .result::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-            z-index: -1;
-            animation: rotateBorder 3s linear infinite;
-        }
-
-        @keyframes rotateBorder {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .verdict-container {
             display: flex;
             align-items: center;
@@ -580,18 +563,10 @@
             box-shadow: 0 0 10px var(--smash-color);
         }
 
-        .smash::before {
-            background: linear-gradient(45deg, var(--smash-color), #00ff00, var(--smash-color), #00ff00);
-        }
-
         .pass {
             background-color: rgba(255, 7, 58, 0.1);
             border-color: var(--pass-color);
             box-shadow: 0 0 10px var(--pass-color);
-        }
-
-        .pass::before {
-            background: linear-gradient(45deg, var(--pass-color), #ff0040, var(--pass-color), #ff0040);
         }
 
         .hidden {
@@ -678,6 +653,7 @@
         <header>
             <h1>上不上AI评分系统</h1>
             <p class="subtitle">上传图片，让AI来评判它的可操性</p>
+            <p class="fun-fact">⚡ 基于先进的多模态AI技术 ⚡</p>
         </header>
         
         <div class="disclaimer" id="disclaimer">
@@ -707,7 +683,7 @@
                 <label class="ai-type-option">
                     <input type="radio" name="ai-type" value="novel">
                     <span class="ai-type-name">小说模式</span>
-                    <span class="ai-type-desc">修好了</span>
+                    <span class="ai-type-desc">不可用</span>
                 </label>
             </div>
         </div>
