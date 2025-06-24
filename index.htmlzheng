@@ -7,641 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-color: #ff00ff;
-            --secondary-color: #00ffff;
-            --accent-color: #ffff00;
-            --dark-color: #0d0221;
-            --light-color: #f0f0f0;
-            --smash-color: #39ff14;
-            --pass-color: #ff073a;
-            --neutral-color: #feca57;
-            --bg-color: #0d0221;
-            --text-color: #f0f0f0;
-            --container-bg: rgba(26, 1, 51, 0.85);
-            --border-color: var(--secondary-color);
-            --font-heading: 'Press Start 2P', cursive;
-            --font-body: 'VT323', monospace;
-            --subtitle-color: #b0bec5;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--dark-color);
-            color: var(--text-color);
-            min-height: 100vh;
-            padding: 20px;
-            background-image: 
-                linear-gradient(rgba(13, 2, 33, 0.95), rgba(13, 2, 33, 0.95)),
-                linear-gradient(var(--border-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-            background-size: 100% 100%, 40px 40px, 40px 40px;
-            animation: moveGrid 10s linear infinite;
-            background-attachment: fixed;
-        }
-
-        @keyframes moveGrid {
-            0% { background-position: 0 0, 0 0, 0 0; }
-            100% { background-position: 0 0, -40px -40px, -40px -40px; }
-        }
-
-        .scanline-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: repeating-linear-gradient(
-                0deg,
-                rgba(0, 0, 0, 0) 0,
-                rgba(0, 0, 0, 0) 2px,
-                rgba(255, 255, 255, 0.05) 3px,
-                rgba(255, 255, 255, 0.05) 4px
-            );
-            pointer-events: none;
-            z-index: 9999;
-            animation: scanlines 10s linear infinite;
-        }
-
-        @keyframes scanlines {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 100px; }
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 0 auto;
-            background-color: var(--container-bg);
-            border-radius: 0;
-            box-shadow: 0 0 15px var(--primary-color), inset 0 0 10px var(--primary-color);
-            padding: 30px 40px;
-            overflow: hidden;
-            backdrop-filter: blur(5px);
-            border: 2px solid var(--primary-color);
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            font-family: var(--font-heading);
-            color: var(--secondary-color);
-            font-size: 1.8rem;
-            font-weight: normal;
-            margin-bottom: 15px;
-            text-shadow: 
-                0 0 5px var(--secondary-color),
-                0 0 10px var(--secondary-color),
-                -2px 2px 0px var(--primary-color);
-            letter-spacing: 2px;
-        }
-
-        .subtitle {
-            font-family: var(--font-body);
-            color: var(--light-color);
-            font-size: 1.5rem;
-            font-weight: normal;
-            margin-bottom: 10px;
-        }
-
-        .fun-fact {
-            font-family: var(--font-body);
-            color: var(--accent-color);
-            font-size: 1.2rem;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-
-        .disclaimer {
-            background-color: rgba(254, 202, 87, 0.1);
-            border-left: 5px solid var(--neutral-color);
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            border-radius: 0;
-            position: relative;
-            font-size: 1.1rem;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-
-        .disclaimer p {
-            font-size: 1.2rem;
-            line-height: 1.4;
-        }
-
-        .disclaimer strong {
-            color: #ff5252;
-            font-weight: normal;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 5px;
-            right: 8px;
-            background: none;
-            border: none;
-            color: var(--light-color);
-            font-size: 1.6rem;
-            cursor: pointer;
-            transition: color 0.2s;
-            font-family: var(--font-body);
-        }
-
-        .close-btn:hover {
-            color: var(--primary-color);
-            transform: rotate(90deg);
-        }
-
-        .announcement {
-            background-color: rgba(0, 255, 255, 0.1);
-            border-left: 5px solid var(--secondary-color);
-            padding: 10px 15px;
-            margin-bottom: 20px;
-            border-radius: 0;
-            position: relative;
-            font-size: 1.1rem;
-            border: 1px solid var(--secondary-color);
-        }
-
-        .announcement h3 {
-            font-family: var(--font-heading);
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-            text-shadow: 0 0 5px var(--secondary-color);
-        }
-
-        .announcement p {
-            font-size: 1.2rem;
-            line-height: 1.4;
-            margin: 0;
-            color: var(--light-color);
-        }
-
-        .ai-type-selector {
-            margin-bottom: 30px;
-            padding: 20px;
-            background-color: rgba(0, 0, 0, 0.2);
-            border-radius: 0;
-            border: 2px solid var(--border-color);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ai-type-selector::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
-            animation: scanMode 3s ease-in-out infinite;
-        }
-
-        @keyframes scanMode {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .ai-type-selector p {
-            margin-bottom: 15px;
-            font-weight: normal;
-            font-family: var(--font-heading);
-            font-size: 1rem;
-            color: var(--primary-color);
-            text-shadow: 0 0 5px var(--primary-color);
-        }
-
-        .ai-type-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-        }
-
-        .ai-type-option {
-            min-width: 140px;
-            display: flex;
-            flex-direction: column;
-            padding: 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 0;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            background-color: transparent;
-            position: relative;
-        }
-
-        .ai-type-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(255, 0, 255, 0.1), rgba(0, 255, 255, 0.1));
-            transition: width 0.3s ease;
-            pointer-events: none;
-        }
-
-        .ai-type-option:hover::before {
-            width: 100%;
-        }
-
-        .ai-type-option:hover {
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 0, 255, 0.3);
-        }
-
-        .ai-type-option input {
-            position: absolute;
-            opacity: 0;
-        }
-
-        .ai-type-option input:checked + .ai-type-name {
-            color: var(--primary-color);
-        }
-
-        .ai-type-option input:checked + .ai-type-name::before {
-            content: ">> ";
-            font-weight: normal;
-            color: var(--accent-color);
-        }
-
-        .ai-type-name {
-            font-size: 1.5rem;
-            font-weight: normal;
-            margin-bottom: 5px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .ai-type-desc {
-            font-size: 1.2rem;
-            color: var(--subtitle-color);
-            position: relative;
-            z-index: 1;
-        }
-
-        .upload-area {
-            border: 2px dashed var(--border-color);
-            border-radius: 0;
-            padding: 50px;
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            cursor: pointer;
-            margin-bottom: 30px;
-            background-color: rgba(0, 0, 0, 0.2);
-            font-size: 1.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .upload-area::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .upload-area:hover::before {
-            left: 100%;
-        }
-
-        .upload-area:hover, .upload-area.drag-over {
-            border-color: var(--primary-color);
-            background-color: rgba(255, 0, 255, 0.1);
-            box-shadow: inset 0 0 10px var(--primary-color);
-            transform: scale(1.02);
-        }
-
-        .upload-inner {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .upload-icon {
-            color: var(--border-color);
-            width: 64px;
-            height: 64px;
-            transition: all 0.3s;
-        }
-
-        .upload-area:hover .upload-icon {
-            color: var(--primary-color);
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .upload-btn {
-            color: var(--primary-color);
-            font-weight: normal;
-            text-decoration: none;
-            cursor: pointer;
-            border-bottom: 1px solid var(--primary-color);
-            transition: all 0.2s;
-        }
-
-        .upload-btn:hover {
-            color: var(--accent-color);
-            border-color: var(--accent-color);
-            text-shadow: 0 0 5px var(--accent-color);
-        }
-
-        .preview-container, .result-container {
-            margin-top: 30px;
-            width: 100%;
-        }
-
-        .preview-actions, .result-actions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .image-preview-container, .image-preview-container-result {
-            max-height: 350px;
-            overflow: hidden;
-            border-radius: 0;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #000;
-            border: 2px solid var(--border-color);
-            cursor: pointer;
-            position: relative;
-        }
-
-        .image-preview-container img, .image-preview-container-result img {
-            max-width: 100%;
-            max-height: 350px;
-            object-fit: contain;
-            transition: all 0.3s ease;
-        }
-
-        .image-preview-container:hover img, .image-preview-container-result:hover img {
-            transform: scale(1.02);
-        }
-
-        .image-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.7);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: normal;
-            font-size: 1.5rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            text-shadow: 0 0 10px var(--accent-color);
-        }
-
-        .image-preview-container-result:hover .image-overlay {
-            opacity: 1;
-        }
-
-        .loading {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-            margin: 40px 0;
-            font-family: var(--font-body);
-            font-size: 1.8rem;
-            color: var(--secondary-color);
-        }
-
-        .loading p::after {
-            content: '_';
-            animation: blink 1s step-end infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        .result {
-            text-align: center;
-            padding: 30px;
-            border-radius: 0;
-            margin-top: 20px;
-            border: 2px solid transparent;
-            transition: all 0.3s ease-in-out;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .verdict-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        #verdict {
-            font-family: var(--font-heading);
-            font-size: 1.5rem;
-            font-weight: normal;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px currentColor;
-        }
-
-        #verdict-icon {
-            font-size: 2rem;
-            line-height: 1;
-            animation: bounce 2s ease-in-out infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        #explanation {
-            font-size: 1.6rem;
-            line-height: 1.5;
-            margin-bottom: 30px;
-            color: var(--text-color);
-            white-space: pre-wrap;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-left: 4px solid var(--accent-color);
-            font-style: normal;
-        }
-
-        .btn {
-            font-family: var(--font-body);
-            background-color: transparent;
-            color: var(--secondary-color);
-            border: 2px solid var(--secondary-color);
-            padding: 12px 24px;
-            border-radius: 0;
-            font-size: 1.5rem;
-            font-weight: normal;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-transform: uppercase;
-            box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.5);
-            line-height: 1.2;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .btn:hover::before {
-            left: 100%;
-        }
-
-        .btn:hover {
-            background-color: var(--secondary-color);
-            color: var(--dark-color);
-            box-shadow: 0 0 15px var(--secondary-color);
-            transform: translateY(-2px) scale(1.05);
-        }
-
-        .btn:active {
-            transform: translateY(1px) scale(0.98);
-            box-shadow: none;
-        }
-
-        .btn-secondary {
-            border-color: #7f8c8d;
-            color: #7f8c8d;
-            box-shadow: inset 0 0 5px rgba(127, 140, 141, 0.5);
-        }
-
-        .btn-secondary:hover {
-            background-color: #7f8c8d;
-            color: var(--dark-color);
-            box-shadow: 0 0 15px #7f8c8d;
-        }
-
-        .smash {
-            background-color: rgba(57, 255, 20, 0.1);
-            border-color: var(--smash-color);
-            box-shadow: 0 0 10px var(--smash-color);
-        }
-
-        .pass {
-            background-color: rgba(255, 7, 58, 0.1);
-            border-color: var(--pass-color);
-            box-shadow: 0 0 10px var(--pass-color);
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        .stats-counter {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: var(--container-bg);
-            padding: 10px 15px;
-            border: 1px solid var(--border-color);
-            border-radius: 0;
-            font-family: var(--font-body);
-            font-size: 1.2rem;
-            color: var(--accent-color);
-            text-shadow: 0 0 5px var(--accent-color);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-        }
-
-        .view-saved-btn {
-            font-family: var(--font-heading);
-            font-size: 1rem;
-            letter-spacing: 1px;
-            background-color: transparent;
-            color: var(--accent-color);
-            border-color: var(--accent-color);
-            display: block;
-            margin: 30px auto 0;
-        }
-
-        .view-saved-btn:hover {
-            background-color: var(--accent-color);
-            color: var(--dark-color);
-            box-shadow: 0 0 15px var(--accent-color);
-        }
-
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            .container {
-                padding: 20px 15px;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .upload-area {
-                padding: 30px 20px;
-                font-size: 1.2rem;
-            }
-
-            .stats-counter {
-                position: relative;
-                top: auto;
-                right: auto;
-                margin: 20px auto;
-                display: block;
-                text-align: center;
-                width: fit-content;
-            }
-            
-            .ai-type-options {
-                grid-template-columns: 1fr;
-            }
-
-            .result-actions, .preview-actions {
-                flex-direction: column;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="scanline-overlay"></div>
@@ -653,7 +19,6 @@
         <header>
             <h1>上不上AI评分系统</h1>
             <p class="subtitle">上传图片，让AI来评判它的可操性</p>
-            <p class="fun-fact">⚡ 基于先进的多模态AI技术 ⚡</p>
         </header>
         
         <div class="disclaimer" id="disclaimer">
@@ -664,7 +29,7 @@
         <div class="announcement" id="announcement">
             <button class="close-btn" id="close-announcement">×</button>
             <h3>📢 系统公告</h3>
-            <p>显示错误的话大概是gemini觉得你发的图片太色情了不好评价，真人漏点图片基本上测不出来。禁止发铜，测点二次元色图就算了，除了换模型也没有什么好解决办法。</p>
+            <p>如果显示错误，很可能是因为AI模型认为图片内容不适宜评价（例如真人裸露）。请尝试二次元或SFW图片。禁止上传违禁内容。</p>
         </div>
 
         <div class="ai-type-selector">
@@ -678,12 +43,12 @@
                 <label class="ai-type-option">
                     <input type="radio" name="ai-type" value="descriptive">
                     <span class="ai-type-name">详细模式</span>
-                    <span class="ai-type-desc">细嗦3+句，够劲</span>
+                    <span class="ai-type-desc">细说3+句，够劲</span>
                 </label>
                 <label class="ai-type-option">
                     <input type="radio" name="ai-type" value="novel">
                     <span class="ai-type-name">小说模式</span>
-                    <span class="ai-type-desc">修好了</span>
+                    <span class="ai-type-desc">400字以上，纯硬核</span>
                 </label>
             </div>
         </div>
@@ -717,7 +82,6 @@
                 </div>
             </div>
             <div id="loading" class="loading hidden">
-                <div class="spinner"></div>
                 <p>AI正在分析中...</p>
             </div>
             <div id="result" class="result hidden">
@@ -735,218 +99,172 @@
     </div>
 
     <script>
-        // 配置和常量
-        const API_URL = 'https://SanVenturas-doiornot.hf.space/api/analyze';
-        const STORAGE_KEY = 'smashOrPassResults';
-        
-        // 状态管理
-        let savedResults = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        let currentAnalysisResult = null;
-        let selectedImageDataUrl = null;
-        let analysisCount = parseInt(localStorage.getItem('analysisCount') || '0');
-        
-        // 更新统计显示
-        function updateStats() {
-            document.getElementById('analysis-count').textContent = analysisCount;
-        }
-        
-        // 保存统计
-        function saveStats() {
-            localStorage.setItem('analysisCount', analysisCount.toString());
-        }
-        
-        // 工具函数
-        function getRatingLabel(rating) {
-            if (rating <= 2) return '纯属答辩';
-            if (rating <= 4) return '勉强能冲';
-            if (rating <= 6) return '有点意思';
-            if (rating <= 8) return '嗯了';
-            return '直接开导';
-        }
-        
-        // API调用
-        async function analyzeImage(imageDataUrl, aiType) {
-            try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ imageDataUrl, aiType })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    console.error("API 错误:", errorData);
-                    throw new Error(errorData.details || 'API 请求失败');
-                }
-                return response.json();
-            } catch (error) {
-                console.error("Fetch 错误:", error);
-                throw error;
-            }
-        }
-        
-        // UI控制函数
-        function showPreview(imageDataUrl) {
-            document.getElementById('preview-image').src = imageDataUrl;
-            document.getElementById('upload-area').classList.add('hidden');
-            document.getElementById('preview-container').classList.remove('hidden');
-            document.getElementById('result-container').classList.add('hidden');
-        }
-
-        function showLoading(imageDataUrl) {
-            document.getElementById('image-preview').src = imageDataUrl;
-            document.getElementById('upload-area').classList.add('hidden');
-            document.getElementById('preview-container').classList.add('hidden');
-            document.getElementById('result-container').classList.remove('hidden');
-            document.getElementById('loading').classList.remove('hidden');
-            document.getElementById('result').classList.add('hidden');
-        }
-
-        function displayResult({ rating, verdict: verdictText, explanation: explanationText }) {
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('result').classList.remove('hidden');
-            
-            const isSmash = verdictText === 'SMASH';
-            const isPass = verdictText === 'PASS';
-
-            document.getElementById('verdict').textContent = `${getRatingLabel(rating)} (${rating}/10)`;
-            document.getElementById('verdict-icon').textContent = isSmash ? 'SMASH!!' : isPass ? 'PASS' : '...';
-            document.getElementById('explanation').textContent = explanationText;
-
-            let resultClass = 'result';
-            if(isSmash) resultClass += ' smash';
-            if(isPass) resultClass += ' pass';
-            document.getElementById('result').className = resultClass;
-            
-            // 增加分析次数
-            analysisCount++;
-            updateStats();
-            saveStats();
-        }
-
-        function displayError(errorMessage) {
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('result').classList.remove('hidden');
-            document.getElementById('verdict').textContent = '错误!';
-            document.getElementById('verdict-icon').textContent = 'ERROR';
-            document.getElementById('explanation').textContent = errorMessage;
-            document.getElementById('result').className = 'result';
-        }
-
-        function resetToUpload() {
-            document.getElementById('preview-container').classList.add('hidden');
-            document.getElementById('result-container').classList.add('hidden');
-            document.getElementById('upload-area').classList.remove('hidden');
-            document.getElementById('file-input').value = '';
-        }
-        
-        // 事件处理函数
-        function handleFileSelect() {
-            const fileInput = document.getElementById('file-input');
-            if (!fileInput.files.length) return;
-
-            const file = fileInput.files[0];
-            if (!file.type.startsWith('image/')) {
-                alert('请选择图片文件');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                selectedImageDataUrl = e.target.result;
-                showPreview(selectedImageDataUrl);
-            };
-            reader.readAsDataURL(file);
-        }
-
-        async function handleStartAnalysis() {
-            if (!selectedImageDataUrl) return;
-
-            showLoading(selectedImageDataUrl);
-
-            try {
-                const aiType = document.querySelector('input[name="ai-type"]:checked').value;
-                const response = await analyzeImage(selectedImageDataUrl, aiType);
-                currentAnalysisResult = { ...response, image: selectedImageDataUrl, aiType };
-                
-                setTimeout(() => {
-                    displayResult(currentAnalysisResult);
-                }, 500);
-
-            } catch (error) {
-                console.error('分析图片时出错:', error);
-                displayError('出错了，请重新上传图片或刷新页面。检查控制台获取详细信息。');
-            }
-        }
-        
-        async function handleTryAgain() {
-            if (selectedImageDataUrl) {
-                await handleStartAnalysis();
-            } else {
-                resetToUpload();
-                currentAnalysisResult = null;
-            }
-        }
-
-        function handleChangeImage() {
-            document.getElementById('file-input').click();
-        }
-        
-        // 初始化
         document.addEventListener('DOMContentLoaded', () => {
+            // --- 状态管理 ---
+            let selectedImageDataUrl = null;
+            let analysisCount = parseInt(localStorage.getItem('analysisCount') || '0');
+
+            // --- DOM 元素 ---
+            const elements = {
+                analysisCount: document.getElementById('analysis-count'),
+                uploadArea: document.getElementById('upload-area'),
+                fileInput: document.getElementById('file-input'),
+                previewContainer: document.getElementById('preview-container'),
+                previewImage: document.getElementById('preview-image'),
+                startAnalysisBtn: document.getElementById('start-analysis-btn'),
+                changeImageBtn: document.getElementById('change-image-btn'),
+                resultContainer: document.getElementById('result-container'),
+                imagePreview: document.getElementById('image-preview'),
+                loading: document.getElementById('loading'),
+                result: document.getElementById('result'),
+                verdict: document.getElementById('verdict'),
+                verdictIcon: document.getElementById('verdict-icon'),
+                explanation: document.getElementById('explanation'),
+                tryAgainBtn: document.getElementById('try-again'),
+                closeDisclaimerBtn: document.getElementById('close-disclaimer'),
+                closeAnnouncementBtn: document.getElementById('close-announcement'),
+                viewSavedBtn: document.getElementById('view-saved')
+            };
+
+            // --- 工具函数 ---
+            const updateStats = () => {
+                elements.analysisCount.textContent = analysisCount;
+                localStorage.setItem('analysisCount', analysisCount.toString());
+            };
+            
+            const getRatingLabel = (rating) => {
+                if (rating <= 2) return '纯属答辩';
+                if (rating <= 4) return '勉强能冲';
+                if (rating <= 6) return '有点意思';
+                if (rating <= 8) return '嗯了';
+                return '直接开导';
+            };
+
+            // --- API 调用 ---
+            async function analyzeImage(imageDataUrl, aiType) {
+                try {
+                    const response = await fetch('/api/analyze', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ imageDataUrl, aiType })
+                    });
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.details || 'API 请求失败');
+                    }
+                    return response.json();
+                } catch (error) {
+                    console.error("API 调用失败:", error);
+                    throw error;
+                }
+            }
+
+            // --- UI 控制 ---
+            const showPreview = (url) => {
+                elements.previewImage.src = url;
+                elements.uploadArea.classList.add('hidden');
+                elements.previewContainer.classList.remove('hidden');
+                elements.resultContainer.classList.add('hidden');
+            };
+
+            const showLoading = (url) => {
+                elements.imagePreview.src = url;
+                elements.uploadArea.classList.add('hidden');
+                elements.previewContainer.classList.add('hidden');
+                elements.resultContainer.classList.remove('hidden');
+                elements.loading.classList.remove('hidden');
+                elements.result.classList.add('hidden');
+            };
+
+            const displayResult = ({ rating, verdict, explanation }) => {
+                elements.loading.classList.add('hidden');
+                elements.result.classList.remove('hidden');
+                elements.verdict.textContent = `${getRatingLabel(rating)} (${rating}/10)`;
+                elements.verdictIcon.textContent = verdict === 'SMASH' ? 'SMASH!!' : 'PASS';
+                elements.explanation.textContent = explanation;
+                elements.result.className = `result ${verdict.toLowerCase()}`;
+                analysisCount++;
+                updateStats();
+            };
+
+            const displayError = (message) => {
+                elements.loading.classList.add('hidden');
+                elements.result.classList.remove('hidden');
+                elements.verdict.textContent = '错误!';
+                elements.verdictIcon.textContent = 'ERROR';
+                elements.explanation.textContent = message;
+                elements.result.className = 'result';
+            };
+
+            const resetToUpload = () => {
+                elements.previewContainer.classList.add('hidden');
+                elements.resultContainer.classList.add('hidden');
+                elements.uploadArea.classList.remove('hidden');
+                elements.fileInput.value = '';
+                selectedImageDataUrl = null;
+            };
+
+            // --- 事件处理 ---
+            const handleFileSelect = () => {
+                if (!elements.fileInput.files.length) return;
+                const file = elements.fileInput.files[0];
+                if (!file.type.startsWith('image/')) return alert('请选择图片文件');
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    selectedImageDataUrl = e.target.result;
+                    showPreview(selectedImageDataUrl);
+                };
+                reader.readAsDataURL(file);
+            };
+
+            const handleStartAnalysis = async () => {
+                if (!selectedImageDataUrl) return;
+                showLoading(selectedImageDataUrl);
+                try {
+                    const aiType = document.querySelector('input[name="ai-type"]:checked').value;
+                    const response = await analyzeImage(selectedImageDataUrl, aiType);
+                    setTimeout(() => displayResult(response), 500);
+                } catch (error) {
+                    displayError('分析失败，请稍后重试。详情请查看控制台。');
+                }
+            };
+
+            const handleTryAgain = () => {
+                selectedImageDataUrl ? handleStartAnalysis() : resetToUpload();
+            };
+            
+            // --- 初始化 ---
             updateStats();
-            
-            // 事件监听器
-            const fileInput = document.getElementById('file-input');
-            const uploadArea = document.getElementById('upload-area');
-            const startBtn = document.getElementById('start-analysis-btn');
-            const changeBtn = document.getElementById('change-image-btn');
-            const tryAgainBtn = document.getElementById('try-again');
-            const closeDisclaimerBtn = document.getElementById('close-disclaimer');
-            const closeAnnouncementBtn = document.getElementById('close-announcement');
-            
-            // 文件选择
-            fileInput.addEventListener('change', handleFileSelect);
-            
-            // 拖拽和点击上传
-            [uploadArea, document.querySelector('.image-preview-container'), document.getElementById('image-preview-container-result')].forEach(zone => {
-                if (zone) {
-                    zone.addEventListener('click', () => fileInput.click());
-                    zone.addEventListener('dragover', (e) => {
-                        e.preventDefault();
-                        zone.classList.add('drag-over');
-                    });
-                    zone.addEventListener('dragleave', (e) => {
-                        e.preventDefault();
-                        zone.classList.remove('drag-over');
-                    });
+
+            // 事件监听
+            const dropZones = [elements.uploadArea, elements.previewContainer, document.getElementById('image-preview-container-result')];
+            dropZones.forEach(zone => {
+                if(zone) {
+                    zone.addEventListener('click', () => elements.fileInput.click());
+                    zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('drag-over'); });
+                    zone.addEventListener('dragleave', (e) => { e.preventDefault(); zone.classList.remove('drag-over'); });
                     zone.addEventListener('drop', (e) => {
                         e.preventDefault();
                         zone.classList.remove('drag-over');
                         if (e.dataTransfer.files.length) {
-                            fileInput.files = e.dataTransfer.files;
+                            elements.fileInput.files = e.dataTransfer.files;
                             handleFileSelect();
                         }
                     });
                 }
             });
+
+            elements.fileInput.addEventListener('change', handleFileSelect);
+            elements.startAnalysisBtn.addEventListener('click', handleStartAnalysis);
+            elements.changeImageBtn.addEventListener('click', () => elements.fileInput.click());
+            elements.tryAgainBtn.addEventListener('click', handleTryAgain);
+            elements.closeDisclaimerBtn.addEventListener('click', () => document.getElementById('disclaimer').style.display = 'none');
+            elements.closeAnnouncementBtn.addEventListener('click', () => document.getElementById('announcement').style.display = 'none');
             
-            // 按钮事件
-            startBtn.addEventListener('click', handleStartAnalysis);
-            changeBtn.addEventListener('click', handleChangeImage);
-            tryAgainBtn.addEventListener('click', handleTryAgain);
-            
-            // 关闭提示
-            closeDisclaimerBtn.addEventListener('click', () => {
-                document.getElementById('disclaimer').style.display = 'none';
-            });
-            closeAnnouncementBtn.addEventListener('click', () => {
-                document.getElementById('announcement').style.display = 'none';
-            });
-            
-            // 简化保存结果功能（移除复杂的保存逻辑，专注核心功能）
-            document.getElementById('view-saved').addEventListener('click', () => {
-                alert('保存功能正在开发中...');
+            // 保存功能提示（因已简化）
+            elements.viewSavedBtn.addEventListener('click', () => {
+                alert('本地保存功能正在重新设计，敬请期待！');
             });
         });
     </script>
