@@ -98,14 +98,23 @@
             height: 20px;
             background-color: rgba(0, 0, 0, 0.5);
             border: 1px solid var(--secondary-color);
-            padding: 3px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
         }
 
         .progress-bar-inner {
-            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 30%;
             height: 100%;
-            background-color: var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-color);
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                var(--accent-color) 30%, 
+                var(--accent-color) 70%, 
+                transparent 100%);
+            box-shadow: 0 0 15px var(--accent-color);
             animation: progressBarScan 2s linear infinite;
         }
 
@@ -134,8 +143,20 @@
         }
         
         @keyframes progressBarScan {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            0% { 
+                left: -30%; 
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% { 
+                left: 100%; 
+                opacity: 0;
+            }
         }
     </style>
 </head>
